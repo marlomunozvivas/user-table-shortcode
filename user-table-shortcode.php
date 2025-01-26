@@ -15,13 +15,18 @@ if (!defined('ABSPATH')) {
 }
 
 // Enqueue DataTables, custom styles, and scripts
+// Bind the CSS for the DataTable and make it responsive
+function user_table_enqueue_styles() {
+    wp_enqueue_style('dataTables-css', plugins_url('user-table-shortcode/assets/css/jquery.dataTables.min.css'), array(), filemtime(plugin_dir_path(__FILE__) . 'assets/css/jquery.dataTables.min.css'), 'all');
+    wp_enqueue_style('user-table-css', plugins_url('user-table-shortcode/assets/css/responsive.dataTables.min.css'), array(), filemtime(plugin_dir_path(__FILE__) . 'assets/css/dataTables.min.css'), 'all');
+}
+add_action('wp_enqueue_scripts', 'user_table_enqueue_styles');
+
+// Bind the necessary scripts to DataTable
 function user_table_enqueue_scripts() {
-    wp_enqueue_style('datatables-css', 'https://cdn.datatables.net/1.13.6/css/jquery.dataTables.min.css');
-    wp_enqueue_style('datatables-responsive-css', 'https://cdn.datatables.net/responsive/2.5.0/css/responsive.dataTables.min.css');
     wp_enqueue_script('jquery');
-    wp_enqueue_script('datatables-js', 'https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js', array('jquery'), null, true);
-    wp_enqueue_script('datatables-responsive-js', 'https://cdn.datatables.net/responsive/2.5.0/js/dataTables.responsive.min.js', array('jquery', 'datatables-js'), null, true);
-    wp_enqueue_script('user-table-js', plugin_dir_url(__FILE__) . 'user-table.js', array('jquery', 'datatables-js', 'datatables-responsive-js'), null, true);
+    wp_enqueue_script('dataTables-js', plugins_url('user-table-shortcode/assets/js/jquery.dataTables.min.js'), array('jquery'), filemtime(plugin_dir_path(__FILE__) . 'assets/js/jquery.dataTables.min.js'), true);
+    wp_enqueue_script('user-table-js', plugins_url('user-table-shortcode/assets/js/dataTables.responsive.min.js'), array('jquery', 'dataTables-js'), filemtime(plugin_dir_path(__FILE__) . 'assets/js/dataTables.responsive.min.js'), true);
 }
 add_action('wp_enqueue_scripts', 'user_table_enqueue_scripts');
 
@@ -80,6 +85,7 @@ function user_table_js_script() {
         jQuery(document).ready(function($) {
             var table = $('#user-table').DataTable({
                 responsive: true,
+                scrollX: true, // Enable horizontal scroll if the table exceeds screen width
                 autoWidth: false,
                 columnDefs: [
                     { targets: '_all', className: 'dt-center' }
@@ -97,11 +103,13 @@ function user_table_js_script() {
                 }
             });
 
+            // Role filter functionality
             $('#role-filter').on('change', function() {
                 var selectedRole = $(this).val();
-                table.column(4).search(selectedRole).draw();
+                table.column(4).search(selectedRole).draw(); // Make sure the correct column is filtered
             });
 
+            // Export to CSV functionality
             $('#export-to-excel').on('click', function() {
                 var tableData = [];
                 table.rows().every(function(rowIdx) {
@@ -147,6 +155,39 @@ function user_table_custom_css() {
             text-align: left;
             padding: 10px;
         }
+
+        /* Ensure the table stays responsive on smaller screens */
+        @media (max-width: 767px) {
+            #user-table_wrapper {
+                overflow-x: auto;
+                -webkit-overflow-scrolling: touch;
+            }
+            table#user-table {
+                width: 100%;
+                table-layout: fixed;  /* Key for fitting on smaller screens */
+            }
+            table#user-table th, 
+            table#user-table td {
+                font-size: 12px;  /* Reduces font size to fit on smaller screens */
+                padding: 5px;     /* Adjusts padding for smaller devices */
+            }
+            #role-filter {
+                width: 100%;
+                margin-bottom: 10px;
+            }
+        }
+        
+        /* Adjust export button for smaller screens */
+        #export-to-excel {
+            margin-top: 20px;
+            padding: 10px;
+            font-size: 14px;
+            width: 100%;
+            max-width: 200px;
+            margin: auto;
+            display: block;
+        }
     </style>';
 }
 add_action('wp_head', 'user_table_custom_css');
+?>
