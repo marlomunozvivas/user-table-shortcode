@@ -18,7 +18,7 @@ if (!defined('ABSPATH')) {
 // Bind the CSS for the DataTable and make it responsive
 function user_table_enqueue_styles() {
     wp_enqueue_style('dataTables-css', plugins_url('user-table-shortcode/assets/css/jquery.dataTables.min.css'), array(), filemtime(plugin_dir_path(__FILE__) . 'assets/css/jquery.dataTables.min.css'), 'all');
-    wp_enqueue_style('user-table-css', plugins_url('user-table-shortcode/assets/css/responsive.dataTables.min.css'), array(), filemtime(plugin_dir_path(__FILE__) . 'assets/css/dataTables.min.css'), 'all');
+    wp_enqueue_style('user-table-css', plugins_url('user-table-shortcode/assets/css/responsive.dataTables.min.css'), array(), filemtime(plugin_dir_path(__FILE__) . 'assets/css/responsive.dataTables.min.css'), 'all');
 }
 add_action('wp_enqueue_scripts', 'user_table_enqueue_styles');
 
