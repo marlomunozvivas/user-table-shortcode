@@ -1,8 +1,8 @@
 === User Table Shortcode ===
-Contributors: your_username
+Contributors: marlomunozvivas
 Tags: users, table, shortcode, datatables, excel
 Requires at least: 5.0
-Tested up to: 6.3
+Tested up to: 6.7
 Stable tag: 1.0
 Requires PHP: 7.2
 License: GPL v2 or later
