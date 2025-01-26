@@ -44,7 +44,7 @@ A WordPress plugin that displays registered users in an interactive table with a
 
 | User Table with Role Filtering            | Export to Excel                     |
 |-------------------------------------------|-------------------------------------|
-| ![User Table](https://drive.google.com/file/d/1_Ah-0iV1n6CcRjabsHc-kb3pUWyah6uS/view?usp=sharing) | ![Export](https://drive.google.com/file/d/17gHukJAsIMVeSpJzHib6JQql4LZRhyE2/view?usp=sharing) |
+| ![User Table](http://www.cinencontraste.com/marlo/images/Screenshot_1.png) | ![Export](http://www.cinencontraste.com/marlo/images/Screenshot_2.png) |
 
 > Replace the placeholder images with actual screenshots.  
 > You can upload the screenshots to this repository or a cloud service and link them here.
